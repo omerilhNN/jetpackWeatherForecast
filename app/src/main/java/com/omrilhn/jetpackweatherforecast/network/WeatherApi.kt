@@ -1,5 +1,6 @@
 package com.omrilhn.jetpackweatherforecast.network
 
+import com.omrilhn.jetpackweatherforecast.model.Weather
 import com.omrilhn.jetpackweatherforecast.model.WeatherObject
 import com.omrilhn.jetpackweatherforecast.utils.Constants
 import retrofit2.http.GET
@@ -13,5 +14,5 @@ interface WeatherApi {
         @Query("q") query:String,
         @Query("units") units: String = "imperial",
         @Query("appid") appid : String = Constants.API_KEY
-    ):WeatherObject
+    ): Weather
 }
