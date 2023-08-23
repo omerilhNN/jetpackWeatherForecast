@@ -19,7 +19,6 @@ class WeatherRepository @Inject constructor(private val api: WeatherApi) {
             return DataOrException(e = e)
         }
         return DataOrException(data = response)
-
-
     }
+
 }

@@ -16,25 +16,10 @@ import javax.inject.Inject
 //In order to get Information onto our UI
 @HiltViewModel
 class MainViewModel @Inject constructor(private val repository: WeatherRepository )
-    : ViewModel(){
-        val data : MutableState<DataOrException<Weather,Boolean,Exception>>
-            = mutableStateOf(DataOrException(null,true,Exception("")))
-    init{
-        loadWeather()
-    }
-
-    private fun loadWeather() {
-        getWeather("Seattle")
-    }
-
-    private fun getWeather(city: String) {
-        viewModelScope.launch {//Because we are gonna call suspend fun\\
-            // viewModelScope, ViewModel sınıflarında asenkron işlemleri yönetmek için kullanılan bir kapsam nesnesidir ve bu sayede işlemlerin uygun bir şekilde yaşam döngüsüne entegre edilmesini sağlar.
-            if(city.isEmpty()) return@launch
-            data.value.loading = true
-            data.value = repository.getWeather(cityQuery = city)
-            if(data.value.data.toString().isNotEmpty()) data.value.loading = false
+    : ViewModel() {
+        suspend fun getWeatherData(city : String)
+        :DataOrException<Weather,Boolean,Exception>{
+            return repository.getWeather(cityQuery = city)
         }
-        Log.d("get","GET Weather: ${data.value.data.toString()}")
-    }
+
 }
